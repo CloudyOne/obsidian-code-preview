@@ -1,17 +1,23 @@
 import * as fs from "fs";
+import * as _path from "path";
 import { DataWriteOptions } from "obsidian";
 import { useObsidianStore } from "src/store";
 import { isNumber, isRegExp, isString } from "./lodash";
 import { relative } from './path';
 import { Alias } from '../obsidian_vue.type';
 
-export function readFile(path: string) {
-	const { app } = useObsidianStore();
+function readFile(path: string, pathResolveMode?: "static" | "relative"): Promise<string> {
+	const { app } = useObsidianStore();  
+  
+	if (pathResolveMode === "static" && _path.isAbsolute(path)) {		
+	  return Promise.resolve(fs.readFileSync(path, "utf8"));	  
+	}
+	  
 	return app.vault.adapter.read(relative(path));
 }
 
-export const selectFileSync = async (path: string, start: number | string | RegExp = 1, end?: number | string | RegExp) => {
-	const content = await readFile(path);
+export const selectFileSync = async (path: string, start: number | string | RegExp = 1, end?: number | string | RegExp, pathResolveMode?: "static" | "relative") => {
+	const content = await readFile(path, pathResolveMode);
 	const lines = content.split("\n");
 	const ret = lines;
 	let startIndex = isNumber(start) ? start - 1 : 0;
