@@ -1,5 +1,6 @@
 # Obsidian Code Previews Plugin
 
+[中文](./README.CN.md)
 
 ## Example
 
@@ -40,6 +41,34 @@ path: /sub/color.css
 path: /hello.js
 ```</code></pre>
 
+</details>
+
+<details open>
+<summary> Static Path </summary>
+For paths outside of the Vault folder
+
+<pre><code>```preview
+path: C:\source\obsidian-code-preview\src\main.ts
+pathResolve: true
+```</code></pre>
+</details>
+
+### VSCode Integration
+
+<details open>
+<summary> VSCode Link </summary>
+Includes a link at the top of the code block to open the file in VSCode
+
+<pre><code>```preview
+path: /hello.js
+includeVSCodeLink: true
+```</code></pre>
+
+<pre><code>```preview
+path: C:\source\obsidian-code-preview\src\main.ts
+pathResolve: true
+includeVSCodeLink: true
+```</code></pre>
 </details>
 
 ### CodeBlock language
@@ -219,6 +248,8 @@ highlight:
 | end | preview end line. | number or string or RegExp |  - |
 | highlight | highlight lines | number or string or RegExp | - |
 | linenumber | display line Numbers, priority is greater than the plugin configuration | true or false | plugin config |
+| includeVSCodeLink | displays a link to open the file in VSCode | true or false | false |
+| pathResolve | enables resolving of static paths outside of the vault | true or false | false |
 
 ## Plugin configuration
 
@@ -236,4 +267,5 @@ highlight:
 
 ## Thank
 
-linenumber, highlight Based on [obsidian-better-codeblock](https://github.com/stargrey/obsidian-better-codeblock) his implementation
+[CloudyOne](https://github.com/cloudyone), for adding VSCodeLink support 🙌 
+* linenumber, highlight Based on [obsidian-better-codeblock](https://github.com/stargrey/obsidian-better-codeblock) his implementation

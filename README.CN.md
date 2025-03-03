@@ -41,6 +41,31 @@ path: /hello.js
 
 </details>
 
+### 静态路径
+<details open>
+<summary> 静态路径 </summary>
+对于 Vault 文件夹外的路径
+<pre><code>```preview
+path: C:\source\obsidian-code-preview\src\main.ts
+pathResolve: true
+```</code></pre>
+</details>
+
+### VSCode 集成
+<details open>
+<summary> VSCode 链接 </summary>
+在代码块顶部包含一个链接，用于在 VSCode 中打开文件
+<pre><code>```preview
+path: /hello.js
+includeVSCodeLink: true
+```</code></pre>
+<pre><code>```preview
+path: C:\source\obsidian-code-preview\src\main.ts
+pathResolve: true
+includeVSCodeLink: true
+```</code></pre>
+</details>
+
 ### 代码块语言
 
 代码块的语言默认使用文件的扩展名。
@@ -218,6 +243,8 @@ highlight:
 | end | 预览结束行数 | number or string or RegExp |  - |
 | highlight | 高亮的行 | number or string or RegExp | - |
 | linenumber | 是否显示行号, 优先级大于插件配置 | true or false | 插件配置 |
+| includeVSCodeLink | 显示一个链接以在 VSCode 中打开文件 | true 或 false | false |
+| pathResolve | 启用解析 Vault 外部的静态路径 | true 或 false | false |
 
 ## 插件配置
 
@@ -235,4 +262,5 @@ highlight:
 
 ## Thank
 
+[CloudyOne](https://github.com/cloudyone)，感谢其添加了 VSCodeLink 支持 🙌 
 linenumber, highlight 基于[obsidian-better-codeblock](https://github.com/stargrey/obsidian-better-codeblock)基础实现
