@@ -1,6 +1,8 @@
 # Obsidian Code Previews Plugin
 
-[中文](./README.CN.md)
+Original Repo: https://github.com/stargrey/obsidian-better-codeblock
+
+I noticed that despite issues being submitted to the old repo, there's been no update. Any non-relative pathing wasn't working, so I wanted to fix that, and then add a few features.
 
 ## Example
 
