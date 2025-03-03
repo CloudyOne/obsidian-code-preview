@@ -2,11 +2,13 @@ import * as _path from "path";
 import { useObsidianStore } from "src/store";
 import { useSettingStore } from '../store/default_setting';
 
-export const resolve = (path: string, sourcePath?: string): string => {
+export const resolve = (path: string, sourcePath?: string, pathResolveMode = "relative"): string => {
 	if (path == null) {
 		return "";
 	}
-
+	if (pathResolveMode === "static" && _path.isAbsolute(path)) {    
+		return _path.normalize(path);
+	}
 	const store = useObsidianStore();
 	const { vaultBasePath } = store;
 

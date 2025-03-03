@@ -109,13 +109,14 @@ export default class CodePreviewPlugin extends SettingPlugin {
 				return result;
 			}
 			const path = codeSetting?.path || codeSetting?.link;
-			const filePath = resolve(path, sourcePath);
+			const pathResolveMode = codeSetting?.pathResolve || "relative";
+			const filePath = resolve(path, sourcePath, pathResolveMode);
 
 			result.linenumber = codeSetting.linenumber == null ? result.linenumber : codeSetting.linenumber;
 
 			result.language =
 				codeSetting?.language || codeSetting?.lang || extname(path);
-			result.code = await selectFileSync(filePath, codeSetting.start, codeSetting.end);
+			result.code = await selectFileSync(filePath, codeSetting.start, codeSetting.end, pathResolveMode);
 			if (!result.code) {
 				if (codeSetting.start || codeSetting.end) {
 					result.code = `File: ${filePath} not match start or end`;
@@ -238,6 +239,36 @@ export default class CodePreviewPlugin extends SettingPlugin {
 		const render = async () => {
 			el.empty();
 			const { code, language, lines, highlight, filePath, linenumber, start } = await this.code(source, sourcePath);
+			const codeContainer: HTMLDivElement = createDiv();
+			const codeSetting = parseYaml(source);
+			const includeVSCodeLink: boolean = codeSetting?.includeVSCodeLink ?? false; // Default to false
+
+			// Generate VS Code link if enabled
+			if (includeVSCodeLink) {
+			const vscodeLink: HTMLAnchorElement = document.createElement("a");
+			vscodeLink.href = `vscode://file/${filePath}`;
+			vscodeLink.textContent = "🔗 Open in VS Code";
+
+			// Apply styles
+			Object.assign(vscodeLink.style, {
+				display: "block",
+				fontSize: "14px",
+				marginBottom: "5px",
+				color: "#2d82cc",
+				textDecoration: "none",
+				paddingLeft: "8px",
+				paddingTop: "2px",
+			});
+
+			vscodeLink.target = "_blank"; // Open in new tab
+
+			// Append the link at the top
+			codeContainer.appendChild(vscodeLink);
+			}
+
+			// Append the code container to the element
+			el.appendChild(codeContainer);
+
 			await MarkdownRenderer.renderMarkdown(
 				wrapCodeBlock(language, code),
 				el,
